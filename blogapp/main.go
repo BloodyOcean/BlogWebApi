@@ -6,6 +6,8 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"net/http"
+
+	_ "BlogWebApi/blogapp/docs"
 )
 
 // @title        Blog Application
