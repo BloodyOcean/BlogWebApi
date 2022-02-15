@@ -1,0 +1,225 @@
+basePath: /api/v1
+definitions:
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  main.Comment:
+    properties:
+      body:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      postId:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  main.Post:
+    properties:
+      body:
+        type: string
+      comments:
+        description: Set up one-to-many relationship.
+        items:
+          $ref: '#/definitions/main.Comment'
+        type: array
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: integer
+    type: object
+host: localhost:8081
+info:
+  contact: {}
+  description: This is a blog management application
+  title: Blog Application
+  version: "1.0"
+paths:
+  /comment:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: delete comment from request body by its ID
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: Show all comments
+    post:
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: Create new comment
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: update comment from request body by its ID
+  /comment/{id}:
+    delete:
+      description: get string by ID
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: delete comment from db by its ID
+    get:
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: Show comment by corresponding id
+  /comment/post/{id}:
+    get:
+      description: get string by ID
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Comment'
+      summary: Show all comments by corresponding post id
+  /post:
+    delete:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Post'
+      summary: delete post from request body by its ID
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Post'
+      summary: Show all posts
+    post:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Post'
+      summary: Create new post
+    put:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Post'
+      summary: update post from request body by its ID
+  /post/{id}:
+    delete:
+      description: get string by ID
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Post'
+      summary: delete post by its ID
+    get:
+      description: get string by ID
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Post'
+      summary: Show all posts by corresponding id
+schemes:
+- http
+swagger: "2.0"
